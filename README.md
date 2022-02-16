@@ -1,12 +1,12 @@
 # demo-spring-react-example-v2: dsre-v2
 
 Storybook is here:
-* Production: <https://ucsb-cs156-w22.github.io/STARTER-team03-docs/>
-* QA:  <https://ucsb-cs156-w22.github.io/STARTER-team03-docs-qa/>
+* Production: <https://github.com/ucsb-cs156-w22/team03-w22-6pm-3-docs>
+* QA:  <https://github.com/ucsb-cs156-w22/team03-w22-6pm-3-docs-qa>
 
 Heroku is here:
-* Production: <https://dashboard.heroku.com/apps/w22-6pm-3-team03>
-* QA: <https://dashboard.heroku.com/apps/w22-6pm-3-team03-qa>
+* Production: <https://w22-6pm-3-team03.herokuapp.com/>
+* QA: <https://w22-6pm-3-team03-qa.herokuapp.com/>
 
 The GitHub actions script to deploy the Storybook to QA requires some configuration; see [docs/github-actions.md](docs/github-actions.md) for details.
 
