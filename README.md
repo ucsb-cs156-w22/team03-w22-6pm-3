@@ -4,6 +4,10 @@ Storybook is here:
 * Production: <https://ucsb-cs156-w22.github.io/STARTER-team03-docs/>
 * QA:  <https://ucsb-cs156-w22.github.io/STARTER-team03-docs-qa/>
 
+Heroku is here:
+* Production: <https://dashboard.heroku.com/apps/w22-6pm-3-team03>
+* QA: <https://dashboard.heroku.com/apps/w22-6pm-3-team03-qa>
+
 The GitHub actions script to deploy the Storybook to QA requires some configuration; see [docs/github-actions.md](docs/github-actions.md) for details.
 
 If these repos are not yet setup, see the setup steps in [`docs/storybook.md`](docs/storybook.md).
