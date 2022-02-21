@@ -14,7 +14,7 @@ public class EQproperties{
     private String place;
     private long time;
     private long updated;
-    private int tx;
+    private int tz;
     private String url;
     private String detail;
     private int felt;
