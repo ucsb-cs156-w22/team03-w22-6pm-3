@@ -57,7 +57,7 @@ public class EarthquakesControllerTests extends ControllerTestCase {
 
    @WithMockUser(roles = { "USER" })
         @Test
-        public void api_redditposts_all__user_logged_in__returns_a_redditPost_that_exists() throws Exception {
+        public void api_eqfeatures_all__user_logged_in__returns_a_eqfeature_that_exists() throws Exception {
 
             EQproperties properties = EQproperties.builder()
             .mag(6.5)
@@ -122,8 +122,14 @@ public class EarthquakesControllerTests extends ControllerTestCase {
             String responseString = response.getResponse().getContentAsString();
             assertEquals(expectedJson, responseString);
 
-
-
         }
+
+    @WithMockUser(roles = { "ADMIN" })
+    @Test
+    public void api_purge_eqfeatures_is_void() throws Exception {
+            mockMvc.perform(post("/api/earthquakes/purge").with(csrf())).andExpect(status().isOk()).andReturn();
+
+            verify(earthquakesCollection, times(1)).deleteAll();
+    }   
 
 }

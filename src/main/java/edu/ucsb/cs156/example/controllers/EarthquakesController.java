@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import com.nimbusds.oauth2.sdk.Response;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,9 +38,19 @@ public class EarthquakesController extends ApiController {
     ObjectMapper mapper;
 
     @ApiOperation(value = "List all earthquakes")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
     public Iterable<EQfeature> allPosts() {
         Iterable<EQfeature> features = earthquakesCollection.findAll();
         return features;
     }
+
+    @ApiOperation(value = "Delete all earthquakes from the collection")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/purge")
+    public void purgeEQFeatures() throws JsonProcessingException{
+        earthquakesCollection.deleteAll();
+    }
+
+
 }
