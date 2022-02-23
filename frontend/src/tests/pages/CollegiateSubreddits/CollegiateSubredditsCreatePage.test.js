@@ -13,7 +13,7 @@ jest.mock('react-toastify', () => {
     const originalModule = jest.requireActual('react-toastify');
     return {
         __esModule: true,
-        ...originalModule,
+        ...originalModule, 
         toast: (x) => mockToast(x)
     };
 });
