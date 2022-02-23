@@ -1,6 +1,6 @@
 import { render, waitFor, fireEvent } from "@testing-library/react";
-import UCSBDateForm from "main/components/UCSBDates/UCSBDateForm";
-import { ucsbDatesFixtures } from "fixtures/ucsbDatesFixtures";
+import UCSBSubjectsForm from "main/components/UCSBSubjects/UCSBSubjectsForm";
+import { ucsbSubjectsFixtures } from "fixtures/ucsbSubjectsFixtures";
 import { BrowserRouter as Router } from "react-router-dom";
 
 const mockedNavigate = jest.fn();
@@ -11,30 +11,30 @@ jest.mock('react-router-dom', () => ({
 }));
 
 
-describe("UCSBDateForm tests", () => {
+describe("UCSBSubjectsForm tests", () => {
 
     test("renders correctly ", async () => {
 
         const { getByText } = render(
             <Router  >
-                <UCSBDateForm />
+                <UCSBSubjectsForm />
             </Router>
         );
-        await waitFor(() => expect(getByText(/Quarter YYYYQ/)).toBeInTheDocument());
+        await waitFor(() => expect(getByText(/Subject Code/)).toBeInTheDocument());
         await waitFor(() => expect(getByText(/Create/)).toBeInTheDocument());
     });
 
 
-    test("renders correctly when passing in a UCSBDate ", async () => {
+    test("renders correctly when passing in a UCSBSubject ", async () => {
 
         const { getByText, getByTestId } = render(
             <Router  >
-                <UCSBDateForm initialUCSBDate={ucsbDatesFixtures.oneDate} />
+                <UCSBSubjectsForm initialUCSBSubject={ucsbSubjectsFixtures.oneSubject} />
             </Router>
         );
-        await waitFor(() => expect(getByTestId(/UCSBDateForm-id/)).toBeInTheDocument());
+        await waitFor(() => expect(getByTestId(/UCSBSubjectsForm-id/)).toBeInTheDocument());
         expect(getByText(/Id/)).toBeInTheDocument();
-        expect(getByTestId(/UCSBDateForm-id/)).toHaveValue("1");
+        expect(getByTestId(/UCSBSubjectsForm-id/)).toHaveValue("1");
     });
 
 
@@ -42,37 +42,39 @@ describe("UCSBDateForm tests", () => {
 
         const { getByTestId, getByText } = render(
             <Router  >
-                <UCSBDateForm />
+                <UCSBSubjectsForm />
             </Router>
         );
-        await waitFor(() => expect(getByTestId("UCSBDateForm-quarterYYYYQ")).toBeInTheDocument());
-        const quarterYYYYQField = getByTestId("UCSBDateForm-quarterYYYYQ");
-        const localDateTimeField = getByTestId("UCSBDateForm-localDateTime");
-        const submitButton = getByTestId("UCSBDateForm-submit");
+        await waitFor(() => expect(getByTestId("UCSBSubjectsForm-inactive")).toBeInTheDocument());
+        const inactiveField = getByTestId("UCSBSubjectsForm-inactive");
 
-        fireEvent.change(quarterYYYYQField, { target: { value: 'bad-input' } });
-        fireEvent.change(localDateTimeField, { target: { value: 'bad-input' } });
+        const submitButton = getByTestId("UCSBSubjectsForm-submit");
+
+        fireEvent.change(inactiveField, { target: { value: 'bad-input' } });
+
         fireEvent.click(submitButton);
 
-        await waitFor(() => expect(getByText(/QuarterYYYYQ must be in the format YYYYQ/)).toBeInTheDocument());
-        expect(getByText(/localDateTime must be in ISO format/)).toBeInTheDocument();
+        await waitFor(() => expect(getByText(/Inactive must be a Boolean/)).toBeInTheDocument());
+
     });
 
     test("Correct Error messsages on missing input", async () => {
 
         const { getByTestId, getByText } = render(
             <Router  >
-                <UCSBDateForm />
+                <UCSBSubjectsForm />
             </Router>
         );
-        await waitFor(() => expect(getByTestId("UCSBDateForm-submit")).toBeInTheDocument());
-        const submitButton = getByTestId("UCSBDateForm-submit");
+        await waitFor(() => expect(getByTestId("UCSBSubjectsForm-submit")).toBeInTheDocument());
+        const submitButton = getByTestId("UCSBSubjectsForm-submit");
 
         fireEvent.click(submitButton);
 
-        await waitFor(() => expect(getByText(/QuarterYYYYQ is required./)).toBeInTheDocument());
-        expect(getByText(/Name is required./)).toBeInTheDocument();
-        expect(getByText(/LocalDateTime is required./)).toBeInTheDocument();
+        await waitFor(() => expect(getByText(/Subject Code is required./)).toBeInTheDocument());
+        expect(getByText(/Subject Translation is required./)).toBeInTheDocument();
+        expect(getByText(/Department Code is required./)).toBeInTheDocument();
+        expect(getByText(/College Code is required./)).toBeInTheDocument();
+        expect(getByText(/Inactive is required./)).toBeInTheDocument();
 
     });
 
@@ -83,25 +85,30 @@ describe("UCSBDateForm tests", () => {
 
         const { getByTestId, queryByText } = render(
             <Router  >
-                <UCSBDateForm submitAction={mockSubmitAction} />
+                <UCSBSubjectsForm submitAction={mockSubmitAction} />
             </Router>
         );
-        await waitFor(() => expect(getByTestId("UCSBDateForm-quarterYYYYQ")).toBeInTheDocument());
+        await waitFor(() => expect(getByTestId("UCSBSubjectsForm-subjectCode")).toBeInTheDocument());
 
-        const quarterYYYYQField = getByTestId("UCSBDateForm-quarterYYYYQ");
-        const nameField = getByTestId("UCSBDateForm-name");
-        const localDateTimeField = getByTestId("UCSBDateForm-localDateTime");
-        const submitButton = getByTestId("UCSBDateForm-submit");
+        const subjectCodeField = getByTestId("UCSBSubjectsForm-subjectCode");
+        const subjectTranslationField = getByTestId("UCSBSubjectsForm-subjectTranslation");
+        const deptCodeField = getByTestId("UCSBSubjectsForm-deptCode");
+        const collegeCodeField = getByTestId("UCSBSubjectsForm-collegeCode");
+        const relatedDeptCodeField = getByTestId("UCSBSubjectsForm-relatedDeptCode");
+        const inactiveField = getByTestId("UCSBSubjectsForm-inactive");
+        const submitButton = getByTestId("UCSBSubjectsForm-submit");
 
-        fireEvent.change(quarterYYYYQField, { target: { value: '20221' } });
-        fireEvent.change(nameField, { target: { value: 'noon on January 2nd' } });
-        fireEvent.change(localDateTimeField, { target: { value: '2022-01-02T12:00' } });
+        fireEvent.change(subjectCodeField, { target: { value: 'ANTH' } });
+        fireEvent.change(subjectTranslationField, { target: { value: 'Anthropology' } });
+        fireEvent.change(deptCodeField, { target: { value: 'ANTH' } });
+        fireEvent.change(collegeCodeField, { target: { value: 'L&S' } });
+        fireEvent.change(relatedDeptCodeField, { target: { value: null } });
+        fireEvent.change(inactiveField, { target: { value: false } });
         fireEvent.click(submitButton);
 
         await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
-        expect(queryByText(/QuarterYYYYQ must be in the format YYYYQ/)).not.toBeInTheDocument();
-        expect(queryByText(/localDateTime must be in ISO format/)).not.toBeInTheDocument();
+        expect(queryByText(/Inactive must be a Boolean/)).not.toBeInTheDocument();
 
     });
 
@@ -110,11 +117,11 @@ describe("UCSBDateForm tests", () => {
 
         const { getByTestId } = render(
             <Router  >
-                <UCSBDateForm />
+                <UCSBSubjectsForm />
             </Router>
         );
-        await waitFor(() => expect(getByTestId("UCSBDateForm-cancel")).toBeInTheDocument());
-        const cancelButton = getByTestId("UCSBDateForm-cancel");
+        await waitFor(() => expect(getByTestId("UCSBSubjectsForm-cancel")).toBeInTheDocument());
+        const cancelButton = getByTestId("UCSBSubjectsForm-cancel");
 
         fireEvent.click(cancelButton);
 
