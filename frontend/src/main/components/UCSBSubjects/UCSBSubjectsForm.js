@@ -12,7 +12,7 @@ function UCSBSubjectForm({ initialUCSBSubject, submitAction, buttonLabel="Create
         formState: { errors },
         handleSubmit,
     } = useForm(
-        { defaultValues: initialUCSBDate || {}, }
+        { defaultValues: initialUCSBSubject || {}, }
     );
     // Stryker enable all
 
