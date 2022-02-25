@@ -29,7 +29,7 @@ describe("UCSBSubjectForm tests", () => {
 
         const { getByText, getByTestId } = render(
             <Router  >
-                <UCSBSubjectsForm initialUCSBSubject={ucsbSubjectsFixtures.oneSubject} />
+                <UCSBSubjectForm initialUCSBSubject={ucsbSubjectsFixtures.oneSubject} />
             </Router>
         );
         await waitFor(() => expect(getByTestId(/UCSBSubjectForm-id/)).toBeInTheDocument());
