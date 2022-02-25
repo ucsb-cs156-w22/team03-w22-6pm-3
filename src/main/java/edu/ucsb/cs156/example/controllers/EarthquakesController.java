@@ -2,6 +2,7 @@ package edu.ucsb.cs156.example.controllers;
 
 import edu.ucsb.cs156.example.collections.EarthquakesCollection;
 import edu.ucsb.cs156.example.documents.EQfeature;
+import edu.ucsb.cs156.example.documents.EQlisting;
 import edu.ucsb.cs156.example.services.EarthquakeQueryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Api(description = "Earthquake info from USGS")
@@ -50,6 +53,22 @@ public class EarthquakesController extends ApiController {
     @PostMapping("/purge")
     public void purgeEQFeatures() throws JsonProcessingException{
         earthquakesCollection.deleteAll();
+    }
+
+    @ApiOperation(value = "Retrieve earthquakes a certain distance from UCSB's Stork Tower")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/retrieve")
+    public List<EQfeature> postEarthquakle(
+        @ApiParam("distance in km, e.g. 100") @RequestParam String distance,
+        @ApiParam("minimum magnitude, e.g. 2.5") @RequestParam String minMag
+    ) throws JsonProcessingException {
+        log.info("getEarthquakes: distance={} minMag={}", distance, minMag);
+        String result = earthquakeQueryService.getJSON(distance, minMag);
+
+        EQlisting collection = mapper.readValue(result, EQlisting.class);
+        List<EQfeature> features = collection.getFeatures();
+        List<EQfeature> storedfeatures = earthquakesCollection.saveAll(features);
+        return storedfeatures;
     }
 
 

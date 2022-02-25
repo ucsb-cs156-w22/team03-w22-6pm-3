@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class EQmetadata{
-    private long generated;
+    private Double generated;
     private String url;
     private String title;
     private String api;
