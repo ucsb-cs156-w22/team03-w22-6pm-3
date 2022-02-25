@@ -54,7 +54,7 @@ function UCSBSubjectForm({ initialUCSBSubject, submitAction, buttonLabel="Create
                     id="subjectCode"
                     type="text"
                     isInvalid={Boolean(errors.subjectCode)}
-                    {...register("subjectCode", { required: "Subject Code is required." })}
+                    {...register("subjectCode", { required: "subjectCode is required." })}
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.subjectCode?.message}
@@ -69,7 +69,7 @@ function UCSBSubjectForm({ initialUCSBSubject, submitAction, buttonLabel="Create
                     type="text"
                     isInvalid={Boolean(errors.subjectTranslation)}
                     {...register("subjectTranslation", {
-                        required: "Subject Translation is required."
+                        required: "subjectTranslation is required."
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -100,8 +100,8 @@ function UCSBSubjectForm({ initialUCSBSubject, submitAction, buttonLabel="Create
                     id="collegeCode"
                     type="text"
                     isInvalid={Boolean(errors.collegeCode)}
-                    {...register('collegeCode', {
-                        required: 'collegeCode is required.',
+                    {...register("collegeCode", {
+                        required: "collegeCode is required.",
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -116,7 +116,7 @@ function UCSBSubjectForm({ initialUCSBSubject, submitAction, buttonLabel="Create
                     id="relatedDeptCode"
                     type="text"
                     isInvalid={Boolean(errors.relatedDeptCode)}
-                    {...register("relatedDeptCode", { required: 'relatedDeptCode is required.' })}
+                    {...register("relatedDeptCode", { required: "relatedDeptCode is required." })}
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.relatedDeptCode?.message}
@@ -130,7 +130,7 @@ function UCSBSubjectForm({ initialUCSBSubject, submitAction, buttonLabel="Create
                     id="inactive"
                     type="text"
                     isInvalid={Boolean(errors.inactive)}
-                    {...register("inactive", { required: 'inactive is required'})}
+                    {...register("inactive", { required: "inactive is required."})}
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.inactive?.message}
