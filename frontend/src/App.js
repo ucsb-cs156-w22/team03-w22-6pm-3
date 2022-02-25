@@ -11,6 +11,8 @@ import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 
+import EarthquakesIndexPage from "main/pages/Earthquakes/EarthquakesIndexPage"
+import EarthquakesCreatePage from "main/pages/Earthquakes/EarthquakesCreatePage";
 
 import StudentsIndexPage from "main/pages/Students/StudentsIndexPage";
 import StudentsCreatePage from "main/pages/Students/StudentsCreatePage";
@@ -62,6 +64,15 @@ function App() {
           hasRole(currentUser, "ROLE_USER") && (
             <>
               <Route exact path="/ucsbdates/list" element={<UCSBDatesIndexPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/earthquakes/list" element={<EarthquakesIndexPage />} />
+              <Route exact path="/earthquakes/retrieve" element={<EarthquakesCreatePage />} />
+
             </>
           )
         }
