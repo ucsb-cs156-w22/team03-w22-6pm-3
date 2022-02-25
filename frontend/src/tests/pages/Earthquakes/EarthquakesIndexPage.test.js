@@ -113,6 +113,31 @@ describe("EarthquakesIndexPage tests", () => {
         expect(getByTestId(`${testId}-cell-row-1-col-time`)).toHaveTextContent(1644571918123);
     });
 
+    test("renders empty table when backend unavailable, user only", async () => {
+        setupUserOnly();
+
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/earthquakes/all").timeout();
+
+        const restoreConsole = mockConsole();
+
+        const { queryByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <EarthquakesIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1); });
+
+        const errorMessage = console.error.mock.calls[0][0];
+        expect(errorMessage).toMatch("Error communicating with backend via GET on /api/earthquakes/all");
+        restoreConsole();
+
+        expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
+    });
+
 
 
 });
