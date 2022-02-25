@@ -55,7 +55,7 @@ public class EarthquakesController extends ApiController {
         earthquakesCollection.deleteAll();
     }
 
-    @ApiOperation(value = "Retrieve earthquakes from MongoDB")
+    @ApiOperation(value = "Retrieve earthquakes a certain distance from UCSB's Stork Tower")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/retrieve")
     public List<EQfeature> postEarthquakle(

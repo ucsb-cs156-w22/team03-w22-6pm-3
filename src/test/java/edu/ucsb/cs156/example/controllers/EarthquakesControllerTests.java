@@ -188,16 +188,37 @@ public class EarthquakesControllerTests extends ControllerTestCase {
             lef.add(feature);
 
             EQmetadata md = EQmetadata.builder()
-                // stub
+                .generated(123d)
+                .url("")
+                .title("metadata")
+                .status(200)
+                .api("")
+                .count(1)
+                .build();
 
             EQlisting el = EQlisting.builder()
                 .type("EQlisting")
                 .metadata(md)
-                // stub
+                .features(lef)
+                .bbox(new ArrayList<Double>(){{
+                    add(1d);
+                    add(2d);
+                    add(3d);
+                }})
+                .build();
 
-            mockMvc.perform(post("/api/earthquakes/retrieve").with(csrf())).andExpect(status().isOk()).andReturn();
+            String magnitude = "10";
+            String distance = "100";
 
-            verify(earthquakesCollection, times(1)).saveAll(features);
+            when(earthquakeQueryService.getJSON(distance, magnitude)).thenReturn(mapper.writeValueAsString(el));
+            when(earthquakesCollection.saveAll(lef)).thenReturn(lef);
+
+            MvcResult response = mockMvc.perform(post(String.format("/api/earthquakes/retrieve?distance=%s&minMag=%s", distance, magnitude))
+                .with(csrf()))
+                .andExpect(status().isOk()).andReturn();
+
+            verify(earthquakesCollection, times(1)).saveAll(lef);
+            verify(earthquakeQueryService, times(1)).getJSON(distance, magnitude);
             String expectedJson = mapper.writeValueAsString(lef);
             String responseString = response.getResponse().getContentAsString();
             assertEquals(expectedJson, responseString);
