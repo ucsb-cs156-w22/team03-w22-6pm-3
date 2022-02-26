@@ -55,7 +55,7 @@ describe("UserTable tests", () => {
     );
   });
 
-  test("Has the expected colum headers and content for adminUser", () => {
+  test("Has the expected column headers and content for adminUser", () => {
 
     const currentUser = currentUserFixtures.adminUser;
 
@@ -118,6 +118,8 @@ describe("UserTable tests", () => {
     await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/ucsbdates/edit/1'));
 
   });
+
+  
 
 });
 

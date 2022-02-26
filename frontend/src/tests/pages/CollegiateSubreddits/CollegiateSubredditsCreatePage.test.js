@@ -1,5 +1,5 @@
 import { render, waitFor, fireEvent } from "@testing-library/react";
-import CollegiateSubredditsCreatePage from "main/pages/CollegiateSubreddits/CollegiateSubreddits";
+import CollegiateSubredditsCreatePage from "main/pages/CollegiateSubreddits/CollegiateSubredditsCreatePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
@@ -71,13 +71,13 @@ describe("CollegiateSubredditsCreatePage tests", () => {
         );
 
         await waitFor(() => {
-            expect(getByTestId("CollegiateSubredditsForm-name")).toBeInTheDocument();
+            expect(getByTestId("CollegiateSubredditForm-name")).toBeInTheDocument();
         });
 
-        const nameField = getByTestId("CollegiateSubredditsForm-name");
-        const locationField = getByTestId("CollegiateSubredditsForm-location");
-        const subredditField = getByTestId("CollegiateSubredditsForm-subreddit");
-        const submitButton = getByTestId("CollegiateSubredditsForm-submit");
+        const nameField = getByTestId("CollegiateSubredditForm-name");
+        const locationField = getByTestId("CollegiateSubredditForm-location");
+        const subredditField = getByTestId("CollegiateSubredditForm-subreddit");
+        const submitButton = getByTestId("CollegiateSubredditForm-submit");
 
         fireEvent.change(nameField, { target: { value: 'tname' } });
         fireEvent.change(locationField, { target: { value: 'tlocation' } });
@@ -96,8 +96,8 @@ describe("CollegiateSubredditsCreatePage tests", () => {
             "subreddit": "tsubreddit"
         });
 
-        expect(mockToast).toBeCalledWith("New collegeSubreddit Created - id: 17 name: tname");
-        expect(mockNavigate).toBeCalledWith({ "to": "/collegeiatesubreddits/list" });
+        expect(mockToast).toBeCalledWith("New collegiateSubreddit Created - id: 17 name: tname");
+        expect(mockNavigate).toBeCalledWith({ "to": "/collegiatesubreddits/list" });
     });
 
 

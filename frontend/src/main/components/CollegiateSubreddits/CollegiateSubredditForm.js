@@ -58,7 +58,6 @@ function CollegiateSubredditForm({ initialCollegiateSubreddit, submitAction, but
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.name?.message}
-                    {/* {errors.name?.type === 'pattern' && 'QuarterYYYYQ must be in the format YYYYQ, e.g. 20224 for Fall 2022'} */}
                 </Form.Control.Feedback>
             </Form.Group>
 
