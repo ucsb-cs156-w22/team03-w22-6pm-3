@@ -81,24 +81,6 @@ function App() {
             </>
           )
         }
-<<<<<<< HEAD
-=======
-
-{
-          hasRole(currentUser, "ROLE_USER") && (
-            <>
-              <Route exact path="/ucsbsubjects/list" element={<UCSBSubjectsIndexPage />} />
-            </>
-          )
-        }
-        {
-          hasRole(currentUser, "ROLE_ADMIN") && (
-            <>
-              <Route exact path="/ucsbsubjects/create" element={<UCSBSubjectsCreatePage />} />
-            </>
-          )
-        }
->>>>>>> 8899f87f482d9e3b11b54fe62e118732d6a70bb7
         
                 {
           hasRole(currentUser, "ROLE_USER") && (
