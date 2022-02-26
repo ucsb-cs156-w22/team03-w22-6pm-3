@@ -261,7 +261,6 @@ describe("AppNavbar tests", () => {
 
     });
 
-    // collegiate subreddit stuff
 
     test("renders the collegiatesubreddits menu correctly for a user", async () => {
 
@@ -312,5 +311,3 @@ describe("AppNavbar tests", () => {
     });
 
 });
-
-
