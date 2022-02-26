@@ -39,29 +39,29 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
         @MockBean
         UserRepository userRepository;
 
-        // No authorization tests needed for /api/collegiateSubreddits/admin/all
+        // No authorization tests needed for /api/collegiatesubreddits/admin/all
         // ^ or at least...i think ??????????????
 
-        // Authorization tests for /api/collegiateSubreddits/all
+        // Authorization tests for /api/collegiatesubreddits/all
 
         @Test
         public void api_collegiateSubreddits_all__logged_out__returns_403() throws Exception {
-                mockMvc.perform(get("/api/collegiateSubreddits/all"))
+                mockMvc.perform(get("/api/collegiatesubreddits/all"))
                                 .andExpect(status().is(403));
         }
 
         @WithMockUser(roles = { "USER" })
         @Test
         public void api_collegiateSubreddits_all__user_logged_in__returns_200() throws Exception {
-                mockMvc.perform(get("/api/collegiateSubreddits/all"))
+                mockMvc.perform(get("/api/collegiatesubreddits/all"))
                                 .andExpect(status().isOk());
         }
 
-        // Authorization tests for /api/collegiateSubreddits/post
+        // Authorization tests for /api/collegiatesubreddits/post
         // Only users (and admin, I'm assuming) can post
         @Test
         public void api_collegiateSubreddits_post__logged_out__returns_403() throws Exception {
-                mockMvc.perform(post("/api/collegiateSubreddits/post"))
+                mockMvc.perform(post("/api/collegiatesubreddits/post"))
                                 .andExpect(status().is(403));
         }
 
@@ -83,7 +83,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/collegiateSubreddits/post?name=Test Name&location=Test Location&subreddit=Test Subreddit")
+                                post("/api/collegiatesubreddits/post?name=Test Name&location=Test Location&subreddit=Test Subreddit")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
@@ -112,7 +112,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
                 when(collegiateSubredditRepository.findAll()).thenReturn(expectedCollegiateSubreddits);
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/collegiateSubreddits/all"))
+                MvcResult response = mockMvc.perform(get("/api/collegiatesubreddits/all"))
                                 .andExpect(status().isOk()).andReturn();
 
                 // assert
@@ -138,7 +138,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
             when(collegiateSubredditRepository.findById(eq(7L))).thenReturn(Optional.of(colsub1));
     
             // act
-            MvcResult response = mockMvc.perform(get("/api/collegiateSubreddits?id=7"))
+            MvcResult response = mockMvc.perform(get("/api/collegiatesubreddits?id=7"))
                     .andExpect(status().isOk()).andReturn();
     
             // assert
@@ -160,7 +160,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
             when(collegiateSubredditRepository.findById(eq(7L))).thenReturn(Optional.empty());
     
             // act
-            MvcResult response = mockMvc.perform(get("/api/collegiateSubreddits?id=7"))
+            MvcResult response = mockMvc.perform(get("/api/collegiatesubreddits?id=7"))
                     .andExpect(status().isBadRequest()).andReturn();
     
             // assert
@@ -195,7 +195,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
         when(collegiateSubredditRepository.findById(eq(7L))).thenReturn(Optional.of(redditPutTest));
 
         // act
-        MvcResult response = mockMvc.perform(put("/api/collegiateSubreddits?id=7")
+        MvcResult response = mockMvc.perform(put("/api/collegiatesubreddits?id=7")
 		        .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("utf-8")
                         .content(requestBody)
@@ -225,7 +225,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
 
         // act
         MvcResult response = mockMvc.perform(
-                put("/api/collegiateSubreddits?id=7")
+                put("/api/collegiatesubreddits?id=7")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("utf-8")
                         .content(requestBody)
@@ -252,7 +252,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
 
         // act
         MvcResult response = mockMvc.perform(
-                delete("/api/collegiateSubreddits?id=7")
+                delete("/api/collegiatesubreddits?id=7")
                 .with(csrf()))
                 .andExpect(status().isOk()).andReturn();
 
@@ -275,7 +275,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
 
         // act
         MvcResult response = mockMvc.perform(
-                delete("/api/collegiateSubreddits?id=7")
+                delete("/api/collegiatesubreddits?id=7")
                         .with(csrf()))
                 .andExpect(status().isBadRequest()).andReturn();
 
