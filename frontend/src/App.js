@@ -17,7 +17,7 @@ import EarthquakesCreatePage from "main/pages/Earthquakes/EarthquakesCreatePage"
 
 import UCSBSubjectsIndexPage from "main/pages/UCSBSubjects/UCSBSubjectsIndexPage";
 import UCSBSubjectsCreatePage from "main/pages/UCSBSubjects/UCSBSubjectsCreatePage";
-import UCSBSubjectsCreatePage from "main/pages/UCSBSubjects/UCSBSubjectsEditPage";
+import UCSBSubjectsEditPage from "main/pages/UCSBSubjects/UCSBSubjectsEditPage";
 
 import StudentsIndexPage from "main/pages/Students/StudentsIndexPage";
 import StudentsCreatePage from "main/pages/Students/StudentsCreatePage";
