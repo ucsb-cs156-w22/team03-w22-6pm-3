@@ -35,4 +35,5 @@ public class EQproperties{
     private double gap;
     private String magType;
     private String type;
+    private String title;
 }
