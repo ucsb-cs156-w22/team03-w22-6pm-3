@@ -7,18 +7,20 @@ import TodosIndexPage from "main/pages/Todos/TodosIndexPage";
 import TodosCreatePage from "main/pages/Todos/TodosCreatePage";
 import TodosEditPage from "main/pages/Todos/TodosEditPage";
 
+import CollegiateSubredditsIndexPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsIndexPage";
+import CollegiateSubredditsCreatePage from "main/pages/CollegiateSubreddits/CollegiateSubredditsCreatePage";
+import CollegiateSubredditsEditPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsEditPage";
+
 import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 
 
-import CollegiateSubredditsIndexPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsIndexPage";
-import CollegiateSubredditsCreatePage from "main/pages/CollegiateSubreddits/CollegiateSubredditsCreatePage";
-import CollegiateSubredditsEditPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsEditPage";
+// import EarthquakesIndexPage from "main/pages/Earthquakes/EarthquakesIndexPage"
+// import EarthquakesCreatePage from "main/pages/Earthquakes/EarthquakesCreatePage";
 
-import UCSBSubjectsIndexPage from "main/pages/UCSBSubjects/UCSBSubjectsIndexPage";
-import UCSBSubjectsCreatePage from "main/pages/UCSBSubjects/UCSBSubjectsCreatePage";
-
+// import UCSBSubjectsIndexPage from "main/pages/UCSBSubjects/UCSBSubjectsIndexPage";
+// import UCSBSubjectsCreatePage from "main/pages/UCSBSubjects/UCSBSubjectsCreatePage";
 
 import StudentsIndexPage from "main/pages/Students/StudentsIndexPage";
 import StudentsCreatePage from "main/pages/Students/StudentsCreatePage";
@@ -51,20 +53,20 @@ function App() {
         }
 
 {
-          hasRole(currentUser, "ROLE_USER") && (
-            <>
-              <Route exact path="/collegiatesubreddits/list" element={<CollegiateSubredditsIndexPage />} />
-            </>
-          )
-        }
-        {
-          hasRole(currentUser, "ROLE_ADMIN") && (
-            <>
-              <Route exact path="/collegiatesubreddits/edit/:id" element={<CollegiateSubredditsEditPage />} />
-              <Route exact path="/collegiatesubreddits/create" element={<CollegiateSubredditsCreatePage />} />
-            </>
-          )
-        }
+  hasRole(currentUser, "ROLE_USER") && (
+    <>
+      <Route exact path="/collegiatesubreddits/list" element={<CollegiateSubredditsIndexPage />} />
+    </>
+  )
+}
+{
+  hasRole(currentUser, "ROLE_ADMIN") && (
+    <>
+      <Route exact path="/collegiatesubreddits/edit/:id" element={<CollegiateSubredditsEditPage />} />
+      <Route exact path="/collegiatesubreddits/create" element={<CollegiateSubredditsCreatePage />} />
+    </>
+  )
+}
 
 
         {
@@ -89,6 +91,7 @@ function App() {
             </>
           )
         }
+
         {
           hasRole(currentUser, "ROLE_ADMIN") && (
             <>
@@ -97,7 +100,7 @@ function App() {
             </>
           )
         }
-        
+
 
 
       </Routes>
@@ -106,3 +109,12 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
