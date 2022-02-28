@@ -1,4 +1,4 @@
-import {  render, waitFor } from "@testing-library/react";
+import {  fireEvent, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import EarthquakesIndexPage from "main/pages/Earthquakes/EarthquakesIndexPage";
@@ -10,6 +10,16 @@ import { earthquakesFixtures } from "fixtures/earthquakesFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import mockConsole from "jest-mock-console";
+
+const mockToast = jest.fn();
+jest.mock("react-toastify", () => {
+  const originalModule = jest.requireActual("react-toastify");
+  return {
+    __esModule: true,
+    ...originalModule,
+    toast: (x) => mockToast(x),
+  };
+});
 
 describe("EarthquakesIndexPage tests", () => {
 
@@ -138,6 +148,24 @@ describe("EarthquakesIndexPage tests", () => {
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
+    test("Purge button works", async () => {
+        const queryClient = new QueryClient();
+        axiosMock.onPost("/api/earthquakes/purge").reply(200);
 
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <EarthquakesIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+        const purgeButton = getByTestId("EarthquakesList-purge");
 
+        expect(purgeButton).toBeInTheDocument();
+        fireEvent.click(purgeButton);
+
+        await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
+
+        expect(mockToast).toBeCalledWith("Earthquakes purged");
+    });
 });
