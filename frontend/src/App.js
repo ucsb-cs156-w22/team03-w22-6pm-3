@@ -12,6 +12,14 @@ import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 
 
+import CollegiateSubredditsIndexPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsIndexPage";
+import CollegiateSubredditsCreatePage from "main/pages/CollegiateSubreddits/CollegiateSubredditsCreatePage";
+import CollegiateSubredditsEditPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsEditPage";
+
+import UCSBSubjectsIndexPage from "main/pages/UCSBSubjects/UCSBSubjectsIndexPage";
+import UCSBSubjectsCreatePage from "main/pages/UCSBSubjects/UCSBSubjectsCreatePage";
+
+
 import StudentsIndexPage from "main/pages/Students/StudentsIndexPage";
 import StudentsCreatePage from "main/pages/Students/StudentsCreatePage";
 
@@ -38,6 +46,22 @@ function App() {
               <Route exact path="/todos/list" element={<TodosIndexPage />} />
               <Route exact path="/todos/create" element={<TodosCreatePage />} />
               <Route exact path="/todos/edit/:todoId" element={<TodosEditPage />} />
+            </>
+          )
+        }
+
+{
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/collegiatesubreddits/list" element={<CollegiateSubredditsIndexPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_ADMIN") && (
+            <>
+              <Route exact path="/collegiatesubreddits/edit/:id" element={<CollegiateSubredditsEditPage />} />
+              <Route exact path="/collegiatesubreddits/create" element={<CollegiateSubredditsCreatePage />} />
             </>
           )
         }
@@ -73,6 +97,8 @@ function App() {
             </>
           )
         }
+        
+
 
       </Routes>
     </BrowserRouter>
