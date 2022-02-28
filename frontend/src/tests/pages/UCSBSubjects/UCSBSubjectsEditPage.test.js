@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import UCSBSubjectsEditPage from "main/pages/UCSBSubjects/UCSBSubjectsEditPage";
+import UCSBSubjectsCreatePage from "main/pages/UCSBSubjects/UCSBSubjectsCreatePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
@@ -8,7 +8,7 @@ import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
-describe("UCSBSubjectsEditPage tests", () => {
+describe("UCSBSubjectsCreatePage tests", () => {
 
     const axiosMock =new AxiosMockAdapter(axios);
     axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.adminUser);
@@ -19,7 +19,7 @@ describe("UCSBSubjectsEditPage tests", () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <UCSBSubjectsEditPage />
+                    <UCSBSubjectsCreatePage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
