@@ -112,5 +112,5 @@ describe("UCSBSubjectsCreatePage tests", () => {
         expect(mockNavigate).toBeCalledWith({ "to": "/UCSBSubjects/list" });
     });
 
-
 });
+
