@@ -86,8 +86,8 @@ describe("EarthquakesIndexPage tests", () => {
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234"); });
-        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("abcd5678abcd5678abcd5678");
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-_id`)).toHaveTextContent("abcd1234abcd1234abcd1234"); });
+        expect(getByTestId(`${testId}-cell-row-1-col-_id`)).toHaveTextContent("abcd5678abcd5678abcd5678");
         expect(getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA");
         expect(getByTestId(`${testId}-cell-row-1-col-title`)).toHaveTextContent("M 2.6 - 5km ESE of Ojai, CA");
         expect(getByTestId(`${testId}-cell-row-0-col-mag`)).toHaveTextContent(2.16);
@@ -112,7 +112,7 @@ describe("EarthquakesIndexPage tests", () => {
         );
 
         await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-mag`)).toHaveTextContent(2.16); });
-        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("abcd5678abcd5678abcd5678");
+        expect(getByTestId(`${testId}-cell-row-1-col-_id`)).toHaveTextContent("abcd5678abcd5678abcd5678");
         expect(getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA");
         expect(getByTestId(`${testId}-cell-row-1-col-title`)).toHaveTextContent("M 2.6 - 5km ESE of Ojai, CA");
         //expect(getByTestId(`${testId}-cell-row-0-col-mag`)).toHaveTextContent(2.16);
