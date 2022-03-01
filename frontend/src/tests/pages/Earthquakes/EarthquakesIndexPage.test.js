@@ -1,4 +1,4 @@
-import {  render, waitFor } from "@testing-library/react";
+import {  fireEvent, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import EarthquakesIndexPage from "main/pages/Earthquakes/EarthquakesIndexPage";
@@ -10,6 +10,16 @@ import { earthquakesFixtures } from "fixtures/earthquakesFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import mockConsole from "jest-mock-console";
+
+const mockToast = jest.fn();
+jest.mock("react-toastify", () => {
+  const originalModule = jest.requireActual("react-toastify");
+  return {
+    __esModule: true,
+    ...originalModule,
+    toast: (x) => mockToast(x),
+  };
+});
 
 describe("EarthquakesIndexPage tests", () => {
 
@@ -76,8 +86,8 @@ describe("EarthquakesIndexPage tests", () => {
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234"); });
-        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("abcd5678abcd5678abcd5678");
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-_id`)).toHaveTextContent("abcd1234abcd1234abcd1234"); });
+        expect(getByTestId(`${testId}-cell-row-1-col-_id`)).toHaveTextContent("abcd5678abcd5678abcd5678");
         expect(getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA");
         expect(getByTestId(`${testId}-cell-row-1-col-title`)).toHaveTextContent("M 2.6 - 5km ESE of Ojai, CA");
         expect(getByTestId(`${testId}-cell-row-0-col-mag`)).toHaveTextContent(2.16);
@@ -101,11 +111,11 @@ describe("EarthquakesIndexPage tests", () => {
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234"); });
-        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("abcd5678abcd5678abcd5678");
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-mag`)).toHaveTextContent(2.16); });
+        expect(getByTestId(`${testId}-cell-row-1-col-_id`)).toHaveTextContent("abcd5678abcd5678abcd5678");
         expect(getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA");
         expect(getByTestId(`${testId}-cell-row-1-col-title`)).toHaveTextContent("M 2.6 - 5km ESE of Ojai, CA");
-        expect(getByTestId(`${testId}-cell-row-0-col-mag`)).toHaveTextContent(2.16);
+        //expect(getByTestId(`${testId}-cell-row-0-col-mag`)).toHaveTextContent(2.16);
         expect(getByTestId(`${testId}-cell-row-1-col-mag`)).toHaveTextContent(2.6);
         expect(getByTestId(`${testId}-cell-row-0-col-place`)).toHaveTextContent("10km ESE of Ojai, CA");
         expect(getByTestId(`${testId}-cell-row-1-col-place`)).toHaveTextContent("5km ESE of Ojai, CA");
@@ -138,6 +148,24 @@ describe("EarthquakesIndexPage tests", () => {
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
+    test("Purge button works", async () => {
+        const queryClient = new QueryClient();
+        axiosMock.onPost("/api/earthquakes/purge").reply(200);
 
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <EarthquakesIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+        const purgeButton = getByTestId("EarthquakesList-purge");
 
+        expect(purgeButton).toBeInTheDocument();
+        fireEvent.click(purgeButton);
+
+        await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
+
+        expect(mockToast).toBeCalledWith("Earthquakes purged");
+    });
 });

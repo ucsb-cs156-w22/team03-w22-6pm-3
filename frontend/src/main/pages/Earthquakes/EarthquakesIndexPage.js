@@ -1,10 +1,11 @@
 import React from 'react'
-import { useBackend } from 'main/utils/useBackend';
+import { useBackend, useBackendMutation } from 'main/utils/useBackend';
 
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import StudentsTable from 'main/components/Earthquakes/EarthquakesTable';
-import { useCurrentUser } from 'main/utils/currentUser'
 import EarthquakesTable from 'main/components/Earthquakes/EarthquakesTable';
+import { useCurrentUser } from 'main/utils/currentUser'
+import { toast } from 'react-toastify';
+import { Button } from 'react-bootstrap';
 
 export default function EarthquakesIndexPage() {
 
@@ -18,12 +19,44 @@ export default function EarthquakesIndexPage() {
       []
     );
 
+  const ListProperties = [];
+  earthquakes.forEach(function (prop) {
+    ListProperties.push(prop.properties)
+  });
+
+  const objectToAxiosParams = (data) => ({
+    url: "/api/earthquakes/purge",
+    method: "POST"
+  });
+
+  const onSuccess = (data) => {
+    toast("Earthquakes purged");
+  };
+
+  const mutation = useBackendMutation(
+    objectToAxiosParams,
+    { onSuccess },
+    // Stryker disable next-line all
+    ["/api/earthquakes/all"]
+  );
+
+  const onSubmit = async () => {
+    mutation.mutate();
+  };
+
   return (
     <BasicLayout>
       <div className="pt-2">
         <h1>Earthquakes</h1>
-        <EarthquakesTable earthquakes={earthquakes} currentUser={currentUser} />
+        <EarthquakesTable earthquakes={ListProperties} currentUser={currentUser} />
+        <Button
+          type="submit"
+          onClick={onSubmit}
+          data-testid="EarthquakesList-purge"
+        >
+          Purge
+        </Button>
       </div>
     </BasicLayout>
-  )
+  );
 }
